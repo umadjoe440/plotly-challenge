@@ -10,10 +10,17 @@ function buildMetadata(sample) {
     console.log(age);
   
     // Use d3 to select the panel with id of `#sample-metadata`
-    var dropdownMenu = d3.select("#sample-metadata");
+    var metaPanel = d3.select("#sample-metadata");
     // Use `.html("") to clear any existing metadata
-
+    metaPanel.html("");
     // Use `Object.entries` to add each key and value pair to the panel
+    Object.entries(data).forEach(function([key, value]) {
+      // Append a cell to the row for each value
+      // in the weather report object
+      var para = metaPanel.append("p");
+      console.log(value);
+      para.text(value);
+    });
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
   });
