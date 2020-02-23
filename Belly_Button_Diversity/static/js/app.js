@@ -17,9 +17,10 @@ function buildMetadata(sample) {
     Object.entries(data).forEach(function([key, value]) {
       // Append a cell to the row for each value
       // in the weather report object
+      var key_value = `${key}:  ${value}`;
       var para = metaPanel.append("p");
-      console.log(value);
-      para.text(value);
+      console.log(key_value);
+      para.text(key_value);
     });
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
@@ -31,7 +32,28 @@ function buildMetadata(sample) {
 function buildCharts(sample) {
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
+  var sample_url = `/samples/${sample}`;
+  d3.json(sample_url).then(function(data){
+    var top_sample_values = data.sample_values.slice(0,10);
+    var top_otu_labels = data.otu_labels.slice(0,10);
+    var top_otu_ids = data.otu_ids.slice(0,10);
+    console.log(top_otu_ids);
+    
+    var pie_data = [{
+      values: top_sample_values,
+      labels: top_otu_ids,
+      type: 'pie'
+    }]
+    
+    var pie_layout = {
+      height: 400,
+      width: 500
+    };
+    
+    Plotly.newPlot('pie', pie_data, pie_layout);
 
+  });
+  
     // @TODO: Build a Bubble Chart using the sample data
 
     // @TODO: Build a Pie Chart
