@@ -52,6 +52,24 @@ function buildCharts(sample) {
     
     Plotly.newPlot('pie', pie_data, pie_layout);
 
+    var trace1 = {
+      x: data.otu_ids,
+      y: data.sample_values,
+      mode: 'markers',
+      marker: {
+        size: data.sample_values
+      }
+    };
+    
+    var bubble_data = [trace1];
+    
+    var bubble_layout = {
+      title: 'Whatevzeees',
+      showlegend: false,
+    };
+    
+    Plotly.newPlot('bubble', bubble_data, bubble_layout);
+
   });
   
     // @TODO: Build a Bubble Chart using the sample data
