@@ -22,11 +22,37 @@ function buildMetadata(sample) {
       console.log(key_value);
       para.text(key_value);
     });
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
-  });
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
+    var gauge_data = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: data.WFREQ,
+        title: { text: "Belly Button Washing Frequency" },
+        type: "indicator",
+        mode: "gauge+number+delta",
+        gauge: {
+          axis: { range: [0, 9] },
+          steps: [
+            { range: [0, 1], color: "lightgray" },
+            { range: [1, 2], color: "lightgray" },
+            { range: [2, 3], color: "lightgray" },
+            { range: [3, 4], color: "pink" },
+            { range: [4, 5], color: "pink" },
+            { range: [5, 6], color: "pink" },
+            { range: [6, 7], color: "red" },
+            { range: [7, 8], color: "red" },
+            { range: [8, 9], color: "red" }
+          ],
+        }
+      }
+    ];
+    
+    var gauge_layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+    Plotly.newPlot('gauge', gauge_data, gauge_layout);
+
+  });
+  
 }
 
 function buildCharts(sample) {
@@ -42,6 +68,7 @@ function buildCharts(sample) {
     var pie_data = [{
       values: top_sample_values,
       labels: top_otu_ids,
+      hovertext: top_otu_labels,
       type: 'pie'
     }]
     
@@ -55,8 +82,10 @@ function buildCharts(sample) {
     var trace1 = {
       x: data.otu_ids,
       y: data.sample_values,
+      text: data.otu_labels,
       mode: 'markers',
       marker: {
+        color: data.otu_ids,
         size: data.sample_values
       }
     };
@@ -64,7 +93,7 @@ function buildCharts(sample) {
     var bubble_data = [trace1];
     
     var bubble_layout = {
-      title: 'Whatevzeees',
+      title: 'Whatevzeees...Gross Belly Button Data',
       showlegend: false,
     };
     
